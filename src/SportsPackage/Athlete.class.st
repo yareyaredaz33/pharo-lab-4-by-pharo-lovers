@@ -10,6 +10,12 @@ Class {
 	#package : 'SportsPackage'
 }
 
+{ #category : 'instance creation' }
+Athlete class >> newSurname: aSurname age: anAge nationality: aNationality [ [
+    ^ self new initializeSurname: aSurname age: anAge nationality: aNationality.
+]
+]
+
 { #category : 'comparing' }
 Athlete >> = anObject [ [
     ^ (anObject isKindOf: self class)
@@ -24,11 +30,12 @@ Athlete >> age [ [
 ]
 
 { #category : 'initialization' }
-Athlete >> initializeSurname: aSurname age: anAge nationality: aNationality [ [
-    surname := aSurname.
-    age := anAge.
-    nationality := aNationality.
-]
+Athlete >> initialize [
+ | aSurname anAge aNationality|
+    super initialize.
+    surname := aSurname ifNil: ['Unknown'].
+    age := anAge ifNil: [0].
+    nationality := aNationality ifNil: ['Unknown'].
 ]
 
 { #category : 'accessing' }
@@ -39,7 +46,17 @@ Athlete >> nationality [ [
 
 { #category : 'printing' }
 Athlete >> printOn: aStream [ [
-    aStream nextPutAll: 'Athlete: ', surname, ', Age: ', age asString, ', Nationality: ', nationality.
+    Transcript show: 'Printing athlete info...'; cr.
+    aStream
+        nextPutAll: 'Athlete: '; nextPutAll: surname;
+        nextPutAll: ', Age: '; nextPutAll: age asString;
+        nextPutAll: ', Nationality: '; nextPutAll: nationality.
+]
+]
+
+{ #category : 'printing' }
+Athlete >> printString [ [
+    ^ 'Athlete: ', surname, ', Age: ', age asString, ', Nationality: ', nationality.
 ]
 ]
 

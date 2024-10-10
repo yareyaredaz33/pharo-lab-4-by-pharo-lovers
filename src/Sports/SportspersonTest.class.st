@@ -23,6 +23,26 @@ SportspersonTest >> testFootballPlayerEarnings [
 ]
 
 { #category : 'tests' }
+SportspersonTest >> testSportspersonDisplayInformation [
+    | person displayString |
+    person := Sportsperson new initializeWithLastName: 'Shevchenko' age: 30 nationality: 'Ukraine'.
+    displayString := person displayInformation.
+    
+    self assert: (displayString includesSubstring: 'Last Name: Shevchenko').
+    self assert: (displayString includesSubstring: 'Age: 30').
+    self assert: (displayString includesSubstring: 'Nationality: Ukraine').
+]
+
+{ #category : 'tests' }
+SportspersonTest >> testSportspersonInitialization [
+    | person |
+    person := Sportsperson new initializeWithLastName: 'Shevchenko' age: 30 nationality: 'Ukraine'.
+    self assert: person lastName = 'Shevchenko'.
+    self assert: person age = 30.
+    self assert: person nationality = 'Ukraine'.
+]
+
+{ #category : 'tests' }
 SportspersonTest >> testTennisPlayerEarnings [
     | player |
     player := TennisPlayer new initializeWithLastName: 'Federer' age: 40 nationality: 'Switzerland' worldRanking: 5 earnings: #(10000 20000 15000).

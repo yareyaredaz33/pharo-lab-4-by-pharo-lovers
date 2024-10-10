@@ -15,6 +15,11 @@ Class {
 }
 
 { #category : 'accessing' }
+Sportsperson >> age [
+    ^ age.
+]
+
+{ #category : 'accessing' }
 Sportsperson >> displayInformation [
     ^ String streamContents: [ :stream |
         stream
@@ -33,6 +38,16 @@ Sportsperson >> initializeWithLastName: aLastName age: anAge nationality: aNatio
     lastName := aLastName.
     age := anAge.
     nationality := aNationality.
+]
+
+{ #category : 'accessing' }
+Sportsperson >> lastName [
+    ^ lastName.
+]
+
+{ #category : 'accessing' }
+Sportsperson >> nationality [
+    ^ nationality.
 ]
 
 { #category : 'accessing' }

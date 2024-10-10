@@ -31,5 +31,9 @@ TennisPlayer >> initializeWithLastName: aLastName age: anAge nationality: aNatio
 
 { #category : 'accessing' }
 TennisPlayer >> totalEarnings [
-    ^ tournamentEarnings inject: 0 into: [ :sum :earnings | sum + earnings ].
+    | lastThreeTournaments |
+    lastThreeTournaments := tournamentEarnings size > 3
+        ifTrue: [ tournamentEarnings last: 3 ]
+        ifFalse: [ tournamentEarnings ].
+    ^ lastThreeTournaments inject: 0 into: [ :sum :earnings | sum + earnings ].
 ]

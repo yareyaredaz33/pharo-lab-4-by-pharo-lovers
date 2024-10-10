@@ -14,6 +14,44 @@ Class {
 	#package : 'Sports'
 }
 
+{ #category : 'arithmetic' }
+Sportsperson >> + years [
+    (years isNumber and: [ years >= 0 ]) ifTrue: [
+        age := age + years ].
+    ^ self.
+
+
+
+]
+
+{ #category : 'comparing' }
+Sportsperson >> < anotherSportsperson [
+    ^ self totalEarnings < anotherSportsperson totalEarnings.
+
+]
+
+{ #category : 'comparing' }
+Sportsperson >> <= anotherSportsperson [
+    ^ self totalEarnings <= anotherSportsperson totalEarnings.
+
+]
+
+{ #category : 'comparing' }
+Sportsperson >> = anotherSportsperson [
+    ^ self totalEarnings = anotherSportsperson totalEarnings.
+
+]
+
+{ #category : 'comparing' }
+Sportsperson >> > anotherSportsperson [
+    ^ self totalEarnings > anotherSportsperson totalEarnings.
+]
+
+{ #category : 'comparing' }
+Sportsperson >> >= anotherSportsperson [
+    ^ self totalEarnings >= anotherSportsperson totalEarnings.
+]
+
 { #category : 'accessing' }
 Sportsperson >> age [
     ^ age.
@@ -53,4 +91,12 @@ Sportsperson >> nationality [
 { #category : 'accessing' }
 Sportsperson >> totalEarnings [
     self subclassResponsibility.
+]
+
+{ #category : 'writing' }
+Sportsperson >> writeOn: aStream [
+    aStream
+        nextPutAll: 'Last Name: ', lastName; cr;
+        nextPutAll: 'Age: ', age asString; cr;
+        nextPutAll: 'Nationality: ', nationality; cr.
 ]

@@ -14,6 +14,38 @@ Class {
 	#package : 'Sports'
 }
 
+{ #category : 'as yet unclassified' }
+Sportsperson class >> loadFromTxtFile [
+    | file stream lastNameva ageva nationalityva athlete |
+    file := 'sportPerson.txt' asFileReference.
+    stream := file readStream.
+    lastNameva := (stream nextLine findTokens: ':') second.
+    ageva := (stream nextLine findTokens: ':') second asInteger.
+    nationalityva := (stream nextLine findTokens: ':') second.
+    athlete := self new initializeWithLastName: lastNameva age: ageva nationality: nationalityva.
+    stream close.
+    ^athlete
+
+"поки шо робочий лише цей метод, але я працюю над тим щоб виводило колекцію з файлу нормально, бо воно працювало, але я шось наробила і воно вже не працює"
+]
+
+{ #category : 'as yet unclassified' }
+Sportsperson class >> loadFromTxtFileCollection [
+ | file stream lastNameval ageval nationalityval athlete athletesCollection |
+    file := 'SportPerson1.txt' asFileReference.
+    stream := file readStream.  
+    athletesCollection := OrderedCollection new.  
+    [stream atEnd] whileFalse: [
+        lastNameval := (stream nextLine findTokens: ':') second.
+        ageval := (stream nextLine findTokens: ':') second asInteger.
+        nationalityval := (stream nextLine findTokens: ':') second.
+        athlete := self new initializeWithLastName: lastNameval age: ageval nationality: nationalityval.
+        athletesCollection add: athlete.
+    ].
+    stream close.
+    ^athletesCollection.
+]
+
 { #category : 'arithmetic' }
 Sportsperson >> + years [
     (years isNumber and: [ years >= 0 ]) ifTrue: [
@@ -86,6 +118,28 @@ Sportsperson >> lastName [
 { #category : 'accessing' }
 Sportsperson >> nationality [
     ^ nationality.
+]
+
+{ #category : 'as yet unclassified' }
+Sportsperson >> saveToFile: anObject [
+    | file stream |
+    
+    file := 'sportPerson.txt' asFileReference.
+    stream := file writeStream.
+
+    anObject isCollection
+        ifTrue: [
+            anObject do: [:athlete |
+                stream nextPutAll: athlete displayInformation. 
+            ].
+        ]
+        ifFalse: [
+            stream nextPutAll: anObject displayInformation.
+        ].
+    
+    stream close.
+    Transcript show: 'файно є'; cr.
+"короче, метод цей може записувати як один обєкт так і колекцію, я початку зробила два окремі методи, але мені вже трішки поплавило мізки, я вже не знаю як має бути"
 ]
 
 { #category : 'accessing' }

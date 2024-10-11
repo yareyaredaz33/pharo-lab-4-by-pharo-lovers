@@ -16,7 +16,7 @@ Class {
 TennisPlayer >> displayInformation [
     ^ String streamContents: [ :stream |
         stream
-            nextPutAll: (super displayInformation); cr;
+            nextPutAll: (super displayInformation);
             nextPutAll: 'World Ranking: '; nextPutAll: worldRanking asString; cr;
             nextPutAll: 'Earnings (last 3 tournaments): ', tournamentEarnings asString; cr;
             nextPutAll: 'Total Earnings: ', self totalEarnings asString; cr ].

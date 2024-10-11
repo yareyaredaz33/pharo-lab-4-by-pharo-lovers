@@ -17,6 +17,22 @@ Class {
 	#package : 'Sports'
 }
 
+{ #category : 'as yet unclassified' }
+Sportsperson class >> findLargestEarningsIn: aCollection [ [
+    | maxEarnings |
+
+    "Знаходимо максимальний прибуток серед спортсменів"
+    maxEarnings := aCollection inject: 0 into: [ :currMax :sportsperson | 
+        currMax max: sportsperson totalEarnings 
+    ].
+
+    "Повертаємо всіх спортсменів з максимальним прибутком"
+  ^ aCollection select: [ :sportsperson | sportsperson totalEarnings = maxEarnings ]
+          collect: [ :sportsperson | sportsperson surname ].
+
+]
+]
+
 { #category : 'arithmetic' }
 Sportsperson >> + years [
     (years isNumber and: [ years >= 0 ]) ifTrue: [
@@ -126,6 +142,12 @@ Sportsperson >> lastName [
 { #category : 'accessing' }
 Sportsperson >> nationality [
     ^ nationality.
+]
+
+{ #category : 'printing' }
+Sportsperson >> printEarnings [
+    "This method will be overridden in subclasses"
+    Transcript show: 'Earnings not available for: ', lastName; cr.
 ]
 
 { #category : 'as yet unclassified' }

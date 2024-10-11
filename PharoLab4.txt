@@ -90,13 +90,14 @@ athletes do: [ :athlete |
 athletes := Array with: 
 	(TennisPlayer new initializeWithLastName: 'Federer' age: 40 nationality: 'Switzerland' worldRanking: 5 earnings: #(10000 20000 15000)) with: 
 	(TennisPlayer new initializeWithLastName: 'Nadal' age: 35 nationality: 'Spain' worldRanking: 3 earnings: #(12000 18000 16000)) with: 
-	(FootballPlayer new initializeWithLastName: 'Messi' age: 35 nationality: 'Argentina' club: 'PSG' contract: 1000000 goals: 30) with: 
+	(FootballPlayer new initializeWithLastName: 'Messi' age: 35 nationality: 'Ukraine' club: 'PSG' contract: 1000000 goals: 30) with: 
 	(FootballPlayer new initializeWithLastName: 'Ronaldo' age: 36 nationality: 'Portugal' club: 'Al-Nassr' contract: 1200000 goals: 25) with:
-	(TennisPlayer new initializeWithLastName: 'Djokovic' age: 34 nationality: 'Serbia' worldRanking: 2 earnings: #(15000 21000 17000)).
+	(TennisPlayer new initializeWithLastName: 'Djokovic' age: 34 nationality: 'Ukraine' worldRanking: 2 earnings: #(15000 21000 17000)).
 maxEarnings := athletes inject: 0 into: [ :currMax :sportsperson | 
     currMax max: sportsperson totalEarnings 
 ].
-Sportsperson displayUkrainianAthletes: athletes nationality: 'Ukraine'.
+Sportsperson displayUkrainianAthletes: athletes.
+Sportsperson displayOtherCountryAthletes: athletes nationality: 'Spain'.
 "=============================================================================================="
 "=====================================максимальний прибуток===================================="
 "=============================================================================================="

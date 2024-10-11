@@ -178,6 +178,12 @@ Sportsperson >> promptToAdd [
 
 ]
 
+{ #category : 'as yet unclassified' }
+Sportsperson >> sportType [ 
+        ^ nil. 
+    
+]
+
 { #category : 'accessing' }
 Sportsperson >> totalEarnings [
     self subclassResponsibility.

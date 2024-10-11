@@ -10,6 +10,9 @@ Class {
 		'age',
 		'nationality'
 	],
+	#classVars : [
+		'SportspersonCollection'
+	],
 	#category : 'Sports',
 	#package : 'Sports'
 }
@@ -52,6 +55,30 @@ Sportsperson >> >= anotherSportsperson [
     ^ self totalEarnings >= anotherSportsperson totalEarnings.
 ]
 
+{ #category : 'adding' }
+Sportsperson >> addNewSportspersonFromDialog [ 
+    
+  Transcript show: 'Додано нового спортсмена: '; cr.
+    lastName := UIManager default request: 'Введіть прізвище спортсмена:'.
+   [ 
+        age := UIManager default request: 'Введіть вік спортсмена:'. 
+        (age isAllDigits) 
+    ] whileFalse: [ 
+        UIManager default inform: 'Вік має бути числом! Будь ласка, спробуйте знову.'. 
+    ].
+    age := age asNumber.
+    nationality := UIManager default request: 'Введіть національність спортсмена:'.
+
+    
+
+      Transcript show: 'Додано нового спортсмена: '; cr;
+               show: 'Прізвище: ', lastName; cr;
+               show: 'Вік: ', age asString; cr;
+               show: 'Національність: ', nationality; cr.
+
+
+]
+
 { #category : 'accessing' }
 Sportsperson >> age [
     ^ age.
@@ -78,6 +105,13 @@ Sportsperson >> earningsLessThan: anotherSportsperson [
 ]
 
 { #category : 'initialization' }
+Sportsperson >> initializeCollection [ [
+    "Ініціалізуємо колекцію для спортсменів"
+    SportspersonCollection := OrderedCollection new.
+]
+]
+
+{ #category : 'initialization' }
 Sportsperson >> initializeWithLastName: aLastName age: anAge nationality: aNationality [
     lastName := aLastName.
     age := anAge.
@@ -92,6 +126,34 @@ Sportsperson >> lastName [
 { #category : 'accessing' }
 Sportsperson >> nationality [
     ^ nationality.
+]
+
+{ #category : 'as yet unclassified' }
+Sportsperson >> promptToAdd [
+    | lastName age nationality type newSportsperson sportsCollection |
+    
+    "Prompt for the type of sportsperson"
+    type := UIManager default chooseFrom: #('Tennis Player' 'Football Player') 
+                        values: { TennisPlayer . FootballPlayer } 
+                        title: 'Choose the type of sportsperson to add'.
+
+    "Prompt for last name"
+    lastName := UIManager default request: 'Enter the last name:'.
+    
+    "Prompt for age and convert it to an integer"
+    age := (UIManager default request: 'Enter the age:') asInteger.
+    
+    "Prompt for nationality"
+    nationality := UIManager default request: 'Enter the nationality:'.
+
+    "Create the appropriate sportsperson instance based on the selected type"
+    newSportsperson := type new initializeWithLastName: lastName age: age nationality: nationality.
+
+    "Add the new sportsperson to the collection"
+    sportsCollection add: newSportsperson.
+
+    ^ newSportsperson.
+
 ]
 
 { #category : 'accessing' }

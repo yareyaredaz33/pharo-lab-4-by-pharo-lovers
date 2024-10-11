@@ -18,6 +18,36 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
+Sportsperson class >> displayOtherCountryAthletes: aCollection nationality: country [
+        | ukrainians |
+        
+        "Фільтруємо українських спортсменів"
+        ukrainians := aCollection select: [ :athlete | athlete nationality = country ].
+
+        "Виводимо інформацію про українських спортсменів"
+        Transcript show: 'спортсмени з ',country,': '; cr.
+        ukrainians do: [ :each | 
+            Transcript show: 'Прізвище: ', each lastName, ', Прибуток: ', each totalEarnings asString, ', Вид спорту: ', each sportType; cr.
+        ].
+    
+]
+
+{ #category : 'as yet unclassified' }
+Sportsperson class >> displayUkrainianAthletes: aCollection [ 
+        | ukrainians |
+        
+        "Фільтруємо українських спортсменів"
+        ukrainians := aCollection select: [ :athlete | athlete nationality = 'Ukraine' ].
+
+        "Виводимо інформацію про українських спортсменів"
+        Transcript show: 'Українські спортсмени:'; cr.
+        ukrainians do: [ :each | 
+            Transcript show: 'Прізвище: ', each lastName, ', Прибуток: ', each totalEarnings asString, ', Вид спорту: ', each sportType; cr.
+        ].
+    
+]
+
+{ #category : 'as yet unclassified' }
 Sportsperson class >> findLargestEarningsIn: aCollection [ [
     | maxEarnings |
 

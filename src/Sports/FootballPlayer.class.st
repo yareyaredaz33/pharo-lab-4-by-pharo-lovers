@@ -58,6 +58,17 @@ FootballPlayer >> initializeWithLastName: aLastName age: anAge nationality: aNat
     goalsScored := goalsCount.
 ]
 
+{ #category : 'printing' }
+FootballPlayer >> printEarnings [
+    Transcript show: 'Football Player: ', lastName, ' Earnings: ', self totalEarnings asString; cr.
+]
+
+{ #category : 'as yet unclassified' }
+FootballPlayer >> sportType [ 
+        ^ 'Футболіст'. 
+    
+]
+
 { #category : 'accessing' }
 FootballPlayer >> totalEarnings [
     ^ annualContract * (1 + (goalsScored * 0.01)).

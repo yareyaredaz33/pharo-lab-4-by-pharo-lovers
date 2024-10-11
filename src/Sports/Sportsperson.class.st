@@ -59,11 +59,17 @@ Sportsperson >> age [
 
 { #category : 'accessing' }
 Sportsperson >> displayInformation [
-    ^ String streamContents: [ :stream |
-        stream
+     ^ String streamContents: [ :stream | 
+        stream 
             nextPutAll: 'Last Name: '; nextPutAll: lastName; cr;
             nextPutAll: 'Age: '; nextPutAll: age asString; cr;
             nextPutAll: 'Nationality: '; nextPutAll: nationality; cr ].
+
+]
+
+{ #category : 'as yet unclassified' }
+Sportsperson >> displayInformationInTranscript [
+    Transcript show: (self displayInformation); cr.
 ]
 
 { #category : 'comparing' }

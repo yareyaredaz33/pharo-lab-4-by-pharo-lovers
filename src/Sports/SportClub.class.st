@@ -12,6 +12,13 @@ Class {
 	#package : 'Sports'
 }
 
+{ #category : 'initialization' }
+SportClub >> initializeWithName: clubName [ [
+    name := clubName.
+    members := OrderedCollection new.
+]
+]
+
 { #category : 'accessing' }
 SportClub >> members [ [
     ^ members.
@@ -19,7 +26,19 @@ SportClub >> members [ [
 ]
 
 { #category : 'accessing' }
+SportClub >> members: aCollection [ [
+    members := aCollection.
+]
+]
+
+{ #category : 'accessing' }
 SportClub >> name [ [
     ^ name.
+]
+]
+
+{ #category : 'accessing' }
+SportClub >> name: aName [ [
+    name := aName.
 ]
 ]

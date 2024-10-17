@@ -38,7 +38,7 @@ SportClub >> displayClubInfo [
 
 ]
 
-{ #category : 'display' }
+{ #category : 'printing' }
 SportClub >> displayClubInfoTranscrip [ 
     Transcript show: 'Назва клубу: ', name; cr.
     Transcript show: 'Члени клубу: '; cr.
@@ -92,6 +92,20 @@ SportClub >> printCategoryInfo: aCategory [
 
 ]
 
+{ #category : 'printing' }
+SportClub >> printTopScorers [ 
+    | topScorers |
+    
+    topScorers := self topScorers.
+    
+    Transcript show: 'Топ гравці за кількістю забитих голів:'; cr.
+    
+    topScorers do: [ :athlete |
+        Transcript show: athlete displayInformation; cr.
+    ].
+
+]
+
 { #category : 'adding' }
 SportClub >> removeSportsperson: anAthlete [ 
     members remove: anAthlete ifAbsent: [ Transcript show: 'Спортсмен не знайдений у клубі.'; cr ].
@@ -108,6 +122,22 @@ SportClub >> topScorers [
 
     ^ sortedFootballers first: (3 min: sortedFootballers size).
 
+
+]
+
+{ #category : 'as yet unclassified' }
+SportClub >> topScorersInfo [ 
+    ^ String streamContents: [ :stream |
+        | topScorers |
+        
+        topScorers := self topScorers.
+        
+        stream nextPutAll: 'Топ гравці за кількістю забитих голів:'; cr.
+        
+        topScorers do: [ :athlete |
+            stream nextPutAll: athlete displayInformation; cr.
+        ].
+    ].
 
 ]
 

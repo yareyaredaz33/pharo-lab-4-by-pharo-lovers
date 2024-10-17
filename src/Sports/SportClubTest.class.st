@@ -35,3 +35,15 @@ SportClubTest >> tearDown [
     "Цей метод буде викликатись після кожного тесту"
     myClub := nil.
 ]
+
+{ #category : 'tests' }
+SportClubTest >> testHighestPaidAthlete [ 
+    self assert: (myClub highestPaidAthlete = athlete3).
+
+]
+
+{ #category : 'running' }
+SportClubTest >> testTotalMembers [ 
+    self assert: (myClub totalMembers) = 4.
+
+]

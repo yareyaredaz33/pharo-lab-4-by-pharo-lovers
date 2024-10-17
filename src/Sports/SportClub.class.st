@@ -20,6 +20,11 @@ SportClub >> addSportsperson: anAthlete [
 ]
 
 { #category : 'display' }
+SportClub >> displayAllMembers [ 
+    members do: [ :athlete | athlete displayInformationInTranscript ].
+]
+
+{ #category : 'display' }
 SportClub >> displayClubInfo [ 
     ^ String streamContents: [ :stream |
         stream
@@ -75,8 +80,25 @@ SportClub >> name: aName [
     name := aName.
 ]
 
+{ #category : 'printing' }
+SportClub >> printCategoryInfo: aCategory [ 
+    Transcript show: 'Список спортсменів категорії: ', aCategory; cr.
+
+    (members select: [ :athlete | athlete sportType = aCategory ]) do: [ :athlete |
+        Transcript show: athlete displayInformation; cr.
+    ].
+
+
+
+]
+
 { #category : 'adding' }
 SportClub >> removeSportsperson: anAthlete [ 
     members remove: anAthlete ifAbsent: [ Transcript show: 'Спортсмен не знайдений у клубі.'; cr ].
 
+]
+
+{ #category : 'accessing' }
+SportClub >> totalMembers [ 
+    ^ members size.
 ]

@@ -99,6 +99,12 @@ SportClub >> removeSportsperson: anAthlete [
 ]
 
 { #category : 'accessing' }
+SportClub >> totalEarnings [ 
+    ^ members inject: 0 into: [ :sum :athlete | sum + athlete totalEarnings ].
+
+]
+
+{ #category : 'accessing' }
 SportClub >> totalMembers [ 
     ^ members size.
 ]

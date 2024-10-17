@@ -13,14 +13,14 @@ Class {
 }
 
 { #category : 'adding' }
-SportClub >> addSportsperson: anAthlete [ [
+SportClub >> addSportsperson: anAthlete [ 
     members add: anAthlete.
-]
+
 
 ]
 
 { #category : 'display' }
-SportClub >> displayClubInfo [ [
+SportClub >> displayClubInfo [ 
     ^ String streamContents: [ :stream |
         stream
             nextPutAll: 'Назва клубу: '; nextPutAll: name; cr;
@@ -30,32 +30,53 @@ SportClub >> displayClubInfo [ [
             stream cr.
         ].
     ].
-]
+
 ]
 
 { #category : 'display' }
-SportClub >> displayClubInfoTranscrip [ [
+SportClub >> displayClubInfoTranscrip [ 
     Transcript show: 'Назва клубу: ', name; cr.
     Transcript show: 'Члени клубу: '; cr.
     members do: [ :athlete | Transcript show: athlete displayInformation; cr ].
-]
+
 ]
 
 { #category : 'finding/searching' }
-SportClub >> findSportspersonByLastName: lastName [ [
+SportClub >> findSportspersonByLastName: lastName [ 
     ^ members detect: [ :athlete | athlete lastName = lastName ] ifNone: [ nil ].
-]
+
 ]
 
 { #category : 'initialization' }
-SportClub >> initializeWithName: clubName [ [
+SportClub >> initializeWithName: clubName [ 
     name := clubName.
     members := OrderedCollection new.
+
 ]
+
+{ #category : 'accessing' }
+SportClub >> members [ 
+    ^ members.
+]
+
+{ #category : 'accessing' }
+SportClub >> members: aCollection [ 
+    members := aCollection.
+
+]
+
+{ #category : 'accessing' }
+SportClub >> name [ 
+    ^ name.
+]
+
+{ #category : 'accessing' }
+SportClub >> name: aName [ 
+    name := aName.
 ]
 
 { #category : 'adding' }
-SportClub >> removeSportsperson: anAthlete [ [
+SportClub >> removeSportsperson: anAthlete [ 
     members remove: anAthlete ifAbsent: [ Transcript show: 'Спортсмен не знайдений у клубі.'; cr ].
-]
+
 ]

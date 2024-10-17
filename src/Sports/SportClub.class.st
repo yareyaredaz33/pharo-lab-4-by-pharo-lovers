@@ -52,10 +52,29 @@ SportClub >> findSportspersonByLastName: lastName [
 
 ]
 
+{ #category : 'review contracts' }
+SportClub >> highestPaidAthlete [ 
+    ^ members detect: [ :athlete | athlete totalEarnings = (members collect: [ :each | each totalEarnings ]) max ].
+
+
+]
+
 { #category : 'initialization' }
 SportClub >> initializeWithName: clubName [ 
     name := clubName.
     members := OrderedCollection new.
+
+]
+
+{ #category : 'review contracts' }
+SportClub >> manualReviewContracts [
+    ^ String streamContents: [ :stream |
+        stream nextPutAll: 'Перегляд контрактів...'; cr.
+        self reviewContracts.
+
+        stream nextPutAll: 'Найоплачуваніший спортсмен: '; cr.
+        stream nextPutAll: (self highestPaidAthlete displayInformation); cr.
+    ].
 
 ]
 
@@ -106,9 +125,76 @@ SportClub >> printTopScorers [
 
 ]
 
-{ #category : 'adding' }
+{ #category : 'removing' }
+SportClub >> removeAthletesMatching: aBlock [ 
+    | initialCount removedAthletes resultMessage |
+    
+    initialCount := members size.
+    
+    removedAthletes := members select: aBlock.
+    
+    members := members reject: aBlock.
+    
+    resultMessage := String streamContents: [ :stream |
+        (removedAthletes isEmpty)
+            ifTrue: [ stream nextPutAll: 'Нікого не видалено'; cr ]
+            ifFalse: [
+                stream nextPutAll: 'Видалено спортсменів: '; cr.
+                removedAthletes do: [ :athlete | stream nextPutAll: athlete lastName; cr ].
+            ].
+    ].
+    
+    ^ resultMessage.
+
+
+
+]
+
+{ #category : 'removing' }
 SportClub >> removeSportsperson: anAthlete [ 
     members remove: anAthlete ifAbsent: [ Transcript show: 'Спортсмен не знайдений у клубі.'; cr ].
+
+]
+
+{ #category : 'review contracts' }
+SportClub >> reviewContracts [ 
+    ^ String streamContents: [ :stream |
+        members do: [ :athlete |
+            stream nextPutAll: athlete displayInformation; cr.
+            stream nextPutAll: 'Заробітки: '; nextPutAll: athlete totalEarnings asString; cr.
+        ].
+    ].
+]
+
+{ #category : 'review contracts' }
+SportClub >> reviewContractsAtSpecificTime: currentTimeString [
+	^ String streamContents: [ :stream |
+		stream nextPutAll: 'Перегляд контрактів...'; cr.
+		self reviewContracts.
+
+		stream nextPutAll: 'Найоплачуваніший спортсмен: '; cr.
+		stream nextPutAll: (self highestPaidAthlete displayInformation); cr.
+	].
+
+
+]
+
+{ #category : 'review contracts' }
+SportClub >> startContractReviewAtSpecificTime: specificTime [
+	[
+		| now currentTimeString |
+		[ true ] whileTrue: [
+			now := Time now.
+			currentTimeString := now print24.
+			(currentTimeString = specificTime) ifTrue: [
+				| reviewInfo |
+				reviewInfo := self manualReviewContracts.
+				Transcript show: reviewInfo; cr.
+				(Delay forSeconds: 60) wait.
+			].
+			(Delay forSeconds: 10) wait.
+		].
+	] fork.
 
 ]
 

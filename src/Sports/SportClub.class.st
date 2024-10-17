@@ -113,6 +113,30 @@ SportClub >> removeSportsperson: anAthlete [
 ]
 
 { #category : 'as yet unclassified' }
+SportClub >> topRankedTennisPlayers: aRank [ 
+    ^ (members select: [ :athlete | 
+        (athlete isKindOf: TennisPlayer) and: [ athlete worldRanking <= aRank ]
+    ]).
+
+]
+
+{ #category : 'display' }
+SportClub >> topRankedTennisPlayersInfo: aRank [ 
+    | topTennisPlayers |
+    
+    topTennisPlayers := self topRankedTennisPlayers: aRank.
+    
+    ^ String streamContents: [ :stream |
+        stream nextPutAll: 'Тенісисти з топ-', aRank asString, ' світового рейтингу:'; cr.
+        
+        topTennisPlayers do: [ :athlete |
+            stream nextPutAll: athlete displayInformation; cr.
+        ].
+    ].
+
+]
+
+{ #category : 'as yet unclassified' }
 SportClub >> topScorers [ 
     | sortedFootballers |
 
@@ -125,7 +149,7 @@ SportClub >> topScorers [
 
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'display' }
 SportClub >> topScorersInfo [ 
     ^ String streamContents: [ :stream |
         | topScorers |

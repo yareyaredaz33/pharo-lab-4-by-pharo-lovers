@@ -50,6 +50,11 @@ FootballPlayer >> displayInformation [
             nextPutAll: 'Total Earnings: ', self totalEarnings asString; cr ].
 ]
 
+{ #category : 'accessing' }
+FootballPlayer >> goalsScored [ 
+    ^ goalsScored. 
+]
+
 { #category : 'initialization' }
 FootballPlayer >> initializeWithLastName: aLastName age: anAge nationality: aNationality club: aClub contract: aContract goals: goalsCount [
     super initializeWithLastName: aLastName age: anAge nationality: aNationality.

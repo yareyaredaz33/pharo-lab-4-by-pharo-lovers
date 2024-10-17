@@ -98,6 +98,19 @@ SportClub >> removeSportsperson: anAthlete [
 
 ]
 
+{ #category : 'as yet unclassified' }
+SportClub >> topScorers [ 
+    | sortedFootballers |
+
+    sortedFootballers := (members select: [ :athlete | athlete isKindOf: FootballPlayer ]) copy.
+
+    sortedFootballers sort: [ :a :b | a goalsScored > b goalsScored ].
+
+    ^ sortedFootballers first: (3 min: sortedFootballers size).
+
+
+]
+
 { #category : 'accessing' }
 SportClub >> totalEarnings [ 
     ^ members inject: 0 into: [ :sum :athlete | sum + athlete totalEarnings ].

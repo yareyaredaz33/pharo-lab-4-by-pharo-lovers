@@ -12,6 +12,13 @@ Class {
 	#package : 'Sports'
 }
 
+{ #category : 'adding' }
+SportClub >> addSportsperson: anAthlete [ [
+    members add: anAthlete.
+]
+
+]
+
 { #category : 'initialization' }
 SportClub >> initializeWithName: clubName [ [
     name := clubName.
@@ -40,5 +47,11 @@ SportClub >> name [ [
 { #category : 'accessing' }
 SportClub >> name: aName [ [
     name := aName.
+]
+]
+
+{ #category : 'adding' }
+SportClub >> removeSportsperson: anAthlete [ [
+    members remove: anAthlete ifAbsent: [ Transcript show: 'Спортсмен не знайдений у клубі.'; cr ].
 ]
 ]

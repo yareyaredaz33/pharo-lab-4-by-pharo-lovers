@@ -181,7 +181,7 @@ SportClub >> reviewContractsAtSpecificTime: currentTimeString [
 
 { #category : 'as yet unclassified' }
 SportClub >> saveClubToFile [ 
-"    | file stream |
+   | file stream |
     file := 'sportClub.txt' asFileReference.
     stream := file writeStream.
     members isEmpty
@@ -195,7 +195,7 @@ SportClub >> saveClubToFile [
             stream nextPutAll: 'Немає членів клубу'; cr.
         ].
     stream close.
-    Transcript show: 'Інформація про клуб збережена у файл'; cr."
+    Transcript show: 'Інформація про клуб збережена у файл'; cr.
 ]
 
 { #category : 'review contracts' }

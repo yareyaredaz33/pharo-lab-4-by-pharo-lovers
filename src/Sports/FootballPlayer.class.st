@@ -50,12 +50,28 @@ FootballPlayer >> displayInformation [
             nextPutAll: 'Total Earnings: ', self totalEarnings asString; cr ].
 ]
 
+{ #category : 'accessing' }
+FootballPlayer >> goalsScored [ 
+    ^ goalsScored. 
+]
+
 { #category : 'initialization' }
 FootballPlayer >> initializeWithLastName: aLastName age: anAge nationality: aNationality club: aClub contract: aContract goals: goalsCount [
     super initializeWithLastName: aLastName age: anAge nationality: aNationality.
     club := aClub.
     annualContract := aContract.
     goalsScored := goalsCount.
+]
+
+{ #category : 'printing' }
+FootballPlayer >> printEarnings [
+    Transcript show: 'Football Player: ', lastName, ' Earnings: ', self totalEarnings asString; cr.
+]
+
+{ #category : 'as yet unclassified' }
+FootballPlayer >> sportType [ 
+        ^ 'Футболіст'. 
+    
 ]
 
 { #category : 'accessing' }

@@ -29,6 +29,17 @@ TennisPlayer >> initializeWithLastName: aLastName age: anAge nationality: aNatio
     tournamentEarnings := earningsArray.
 ]
 
+{ #category : 'printing' }
+TennisPlayer >> printEarnings [
+    Transcript show: 'Tennis Player: ', lastName, ' Earnings: ', self totalEarnings asString; cr.
+]
+
+{ #category : 'as yet unclassified' }
+TennisPlayer >> sportType [ 
+        ^ 'Тенісист'. 
+    
+]
+
 { #category : 'accessing' }
 TennisPlayer >> totalEarnings [
     | lastThreeTournaments |
@@ -36,4 +47,9 @@ TennisPlayer >> totalEarnings [
         ifTrue: [ tournamentEarnings last: 3 ]
         ifFalse: [ tournamentEarnings ].
     ^ lastThreeTournaments inject: 0 into: [ :sum :earnings | sum + earnings ].
+]
+
+{ #category : 'accessing' }
+TennisPlayer >> worldRanking [ 
+    ^ worldRanking. 
 ]

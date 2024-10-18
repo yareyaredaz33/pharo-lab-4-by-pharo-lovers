@@ -242,7 +242,7 @@ Sportsperson >> earningsLessThan: anotherSportsperson [
 Sportsperson >> initialize [ 
     "Ініціалізуємо базу даних"
     Database := Dictionary new.
-    Transcript show: 'База даних ініціалізована.'; cr.
+    
 
 
 

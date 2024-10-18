@@ -8,13 +8,63 @@ Class {
 		'name',
 		'members'
 	],
+	#classVars : [
+		'Database'
+	],
 	#category : 'Sports',
 	#package : 'Sports'
 }
 
+{ #category : 'as yet unclassified' }
+SportClub class >> clearDatabase [ 
+    "Очищає базу даних клубів"
+    Database := Dictionary new.
+    Transcript show: 'База даних клубів успішно очищена.'; cr.
+
+]
+
+{ #category : 'as yet unclassified' }
+SportClub class >> displayDatabaseState [ 
+    "Виводить стан бази даних клубів"
+    Transcript show: 'Стан бази даних клубів:'; cr.
+    Database isEmpty
+        ifTrue: [ Transcript show: 'База даних порожня.'; cr ]
+        ifFalse: [
+            Database keysAndValuesDo: [:clubName :club |
+                Transcript show: 'Клуб: ', clubName; cr.
+            ].
+        ].
+
+]
+
+{ #category : 'as yet unclassified' }
+SportClub class >> loadByName: aClubName [ 
+    "Завантажує клуб за назвою"
+    ^ Database at: aClubName ifAbsent: [ nil ].
+
+]
+
+{ #category : 'actions' }
+SportClub class >> save: aClub [
+	"Зберігає клуб у базі даних або повідомляє, що клуб уже існує"
+
+	(Database at: aClub name ifAbsent: [ nil ])
+		ifNil: [
+			Database at: aClub name put: aClub.
+			Transcript
+				show: 'Клуб ' , aClub name , ' успішно збережено.';
+				cr ]
+		ifNotNil: [
+			Transcript
+				show: 'Клуб ' , aClub name , ' вже існує у базі даних.';
+				cr ]
+]
+
 { #category : 'adding' }
 SportClub >> addSportsperson: anAthlete [ 
     members add: anAthlete.
+    Transcript show: 'Атлета ', anAthlete lastName, ' успішно додано до клубу ', name; cr.
+
 
 
 ]
@@ -56,6 +106,13 @@ SportClub >> findSportspersonByLastName: lastName [
 SportClub >> highestPaidAthlete [ 
     ^ members detect: [ :athlete | athlete totalEarnings = (members collect: [ :each | each totalEarnings ]) max ].
 
+
+]
+
+{ #category : 'initialization' }
+SportClub >> initialize [ 
+    "Ініціалізуємо базу даних клубів"
+    Database := Dictionary new.
 
 ]
 
@@ -106,9 +163,6 @@ SportClub >> printCategoryInfo: aCategory [
     (members select: [ :athlete | athlete sportType = aCategory ]) do: [ :athlete |
         Transcript show: athlete displayInformation; cr.
     ].
-
-
-
 ]
 
 { #category : 'printing' }

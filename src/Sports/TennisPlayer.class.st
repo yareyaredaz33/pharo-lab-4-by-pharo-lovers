@@ -48,3 +48,8 @@ TennisPlayer >> totalEarnings [
         ifFalse: [ tournamentEarnings ].
     ^ lastThreeTournaments inject: 0 into: [ :sum :earnings | sum + earnings ].
 ]
+
+{ #category : 'accessing' }
+TennisPlayer >> worldRanking [ 
+    ^ worldRanking. 
+]

@@ -11,11 +11,12 @@ Class {
 	#category : 'Sports',
 	#package : 'Sports'
 }
-
+=======
 { #category : 'as yet unclassified' }
 SportClub class >> someTestMethod [
     Transcript show: 'someTestMethod called'; cr.
 ]
+
 
 { #category : 'adding' }
 SportClub >> addSportsperson: anAthlete [ 
@@ -23,6 +24,7 @@ SportClub >> addSportsperson: anAthlete [
 
 
 ]
+
 
 { #category : 'adding' }
 SportClub >> addSportspersonFromDialog [ 
@@ -134,6 +136,81 @@ SportClub >> initializeWithName: clubName [
 
 ]
 
+{ #category : 'as yet unclassified' }
+SportClub >> loadClubFromFile [ 
+     | file stream lastNameval ageval nationalityval athlete line clubval contractval goals worldRanking earnings |
+    file := 'sportClub.txt' asFileReference.
+    stream := file readStream.
+  "  stream nextLine. "
+
+    [stream atEnd] whileFalse: [
+        line := stream nextLine.
+        line isEmpty ifTrue: [ ^self. ].
+
+        lastNameval := (line findTokens: ':') size > 1 ifTrue: [
+            (line findTokens: ':') second
+        ] ifFalse: [ ^self. ].
+
+        line := stream nextLine.
+        ageval := (line findTokens: ':') size > 1 ifTrue: [
+            (line findTokens: ':') second asInteger
+        ] ifFalse: [ ^self. ].
+
+        line := stream nextLine.
+        nationalityval := (line findTokens: ':') size > 1 ifTrue: [
+            (line findTokens: ':') second
+        ] ifFalse: [ ^self. ].
+
+
+       line := stream nextLine.
+        (line indexOf: 'Club:') = 1 ifTrue: [
+            "Футболіст"
+            clubval := (line findTokens: ':') second.
+            
+            line := stream nextLine.
+            contractval := (line findTokens: ':') size > 1 ifTrue: [
+                (line findTokens: ':') second asInteger
+            ] ifFalse: [ ^self. ].
+
+            line := stream nextLine.
+            goals := (line findTokens: ':') size > 1 ifTrue: [
+                (line findTokens: ':') second asInteger
+            ] ifFalse: [ ^self. ].
+
+            athlete := FootballPlayer new 
+                initializeWithLastName: lastNameval 
+                age: ageval 
+                nationality: nationalityval 
+                "club: clubval 
+                annualContract: contractval 
+                goalsScored: goals.
+"
+        ] ifFalse: [
+            "Тенісист"
+            worldRanking := (line findTokens: ':') size > 1 ifTrue: [
+                (line findTokens: ':') second asInteger
+            ] ifFalse: [ ^self. ].
+
+            line := stream nextLine.
+            earnings := (line findTokens: ':') size > 1 ifTrue: [
+                (line findTokens: ':') second asInteger
+            ] ifFalse: [ ^self. ].
+
+            athlete := TennisPlayer new
+                initializeWithLastName: lastNameval
+                age: ageval
+                nationality: nationalityval
+                worldRanking: worldRanking
+                earnings: earnings.
+        ].
+
+        self addSportsperson: athlete.
+    ].
+
+    stream close.
+    Transcript show: 'Завантажено дані з файлу'; cr.
+]
+
 { #category : 'review contracts' }
 SportClub >> manualReviewContracts [
     ^ String streamContents: [ :stream |
@@ -166,6 +243,7 @@ SportClub >> name [
 SportClub >> name: aName [ 
     name := aName.
 ]
+
 
 { #category : 'as yet unclassified' }
 SportClub >> openMainWindow [ 
@@ -266,6 +344,31 @@ SportClub >> reviewContractsAtSpecificTime: currentTimeString [
 ]
 
 { #category : 'as yet unclassified' }
+
+SportClub >> saveClubToFile [ 
+  | fileName file stream |
+    fileName := UIManager default request: 'input name of the file to save'.
+   fileName isEmpty ifTrue: [ 
+       Transcript show: 'Збереження скасовано'; cr.
+       ^self.
+   ].
+
+   file := FileSystem workingDirectory / fileName.
+   stream := file writeStream.
+
+   members isEmpty
+        ifFalse: [
+            members do: [ :athlete |
+                stream nextPutAll: athlete displayInformation; cr.
+            ].
+        ]
+        ifTrue: [
+            stream nextPutAll: 'Немає членів клубу'; cr.
+        ].
+
+   stream close.
+   Transcript show: 'Інформація про клуб збережена у файл: ', fileName; cr.
+=======
 SportClub >> showAllAthletes [ 
     Transcript show: 'Список всіх спортсменів: '; cr.
     members do: [ :athlete |
@@ -296,6 +399,7 @@ SportClub >> showTopTennisPlayers [
 { #category : 'as yet unclassified' }
 SportClub >> someTestMethod [
     Transcript show: 'someTestMethod called'; cr.
+
 ]
 
 { #category : 'review contracts' }

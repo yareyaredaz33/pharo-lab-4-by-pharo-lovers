@@ -46,7 +46,7 @@ SportClub >> addSportspersonFromDialog [
     "Додаємо спортсмена до колекції"
     self addSportsperson: sportsperson.
 
-
+self createMenuMorph.
 ]
 
 { #category : 'as yet unclassified' }
@@ -70,12 +70,18 @@ SportClub >> createMenuMorph [
 
     menuMorph add: 'Вивести інформацію про спортсменів'
         target: self
-        selector: #printAllAthletesInfo.
+        selector: #displayAllMembers.
 
     menuMorph add: 'Переглянути контракти спортсменів'
         target: self
         selector: #reviewContracts.
-
+    menuMorph add: 'Переглянути інформацію про клуб'
+        target: self
+        selector: #displayClubInfo.
+    menuMorph add: 'Переглянути гравця з найвищою зарплатою'
+        target: self
+        selector: #highestPaidAthlete.
+   
     "Return the menu morph to be added to the window or other morph"
     ^ menuMorph.
 
@@ -173,7 +179,7 @@ SportClub >> openMainWindow [
     window addMorph: athleteListPane frame: (0 @ 0 corner: 1 @ 0.6).
 "
     "Додаємо меню"
-    window addMorph: (self createMenuMorph) frame: (0 @ 0.6 corner: 1 @ 1).
+    window addMorph: (self createMenuMorph) frame: (0 @ 0 corner: 1 @ 1).
 
     window openInWorld.
 

@@ -12,10 +12,78 @@ Class {
 	#package : 'Sports'
 }
 
+{ #category : 'as yet unclassified' }
+SportClub class >> someTestMethod [
+    Transcript show: 'someTestMethod called'; cr.
+]
+
 { #category : 'adding' }
 SportClub >> addSportsperson: anAthlete [ 
     members add: anAthlete.
 
+
+]
+
+{ #category : 'adding' }
+SportClub >> addSportspersonFromDialog [ 
+    | lastName age nationality sportType sportsperson |
+    
+    lastName := UIManager default request: 'Введіть прізвище спортсмена:'.
+     [ 
+        age := UIManager default request: 'Введіть вік спортсмена:'. 
+        (age isAllDigits) 
+    ] whileFalse: [ 
+        UIManager default inform: 'Вік має бути числом! Будь ласка, спробуйте знову.'. 
+    ].
+    nationality := UIManager default request: 'Введіть національність спортсмена:'.
+    sportType := UIManager default request: 'Введіть тип спортсмена (FootballPlayer або TennisPlayer):'.
+
+    "Створюємо спортсмена на основі вибраного типу"
+    sportsperson := sportType = 'FootballPlayer'
+        ifTrue: [ FootballPlayer new initializeWithLastName: lastName age: age nationality: nationality club: '' contract: 0 goals: 0 ]
+        ifFalse: [ TennisPlayer new initializeWithLastName: lastName age: age nationality: nationality worldRanking: 0 earnings: #() ].
+"TODO: add transcript output that sportsman is added. preferably add the person itself."
+    "Додаємо спортсмена до колекції"
+    self addSportsperson: sportsperson.
+
+self createMenuMorph.
+]
+
+{ #category : 'as yet unclassified' }
+SportClub >> athleteNames [ 
+    "Список прізвищ спортсменів для відображення в вікні"
+    ^ members collect: [ :athlete | athlete lastName ].
+
+]
+
+{ #category : 'as yet unclassified' }
+SportClub >> createMenuMorph [
+    | menuMorph |
+    
+    "Create a new MorphMenu"
+    menuMorph := MenuMorph new.
+
+    "Add menu items with actions"
+    menuMorph add: 'Додати спортсмена'
+        target: self
+        selector: #addSportspersonFromDialog.
+
+    menuMorph add: 'Вивести інформацію про спортсменів'
+        target: self
+        selector: #displayAllMembers.
+
+    menuMorph add: 'Переглянути контракти спортсменів'
+        target: self
+        selector: #reviewContracts.
+    menuMorph add: 'Переглянути інформацію про клуб'
+        target: self
+        selector: #displayClubInfo.
+    menuMorph add: 'Переглянути гравця з найвищою зарплатою'
+        target: self
+        selector: #highestPaidAthlete.
+   "TODO: maybe rework the appearance of menu, look into other methods."
+    "Return the menu morph to be added to the window or other morph"
+    ^ menuMorph.
 
 ]
 
@@ -99,6 +167,24 @@ SportClub >> name: aName [
     name := aName.
 ]
 
+{ #category : 'as yet unclassified' }
+SportClub >> openMainWindow [ 
+    | window athleteListPane |
+
+    window := SystemWindow labelled: 'Спортивний клуб - ', name.
+  "  window label: 'Спортивний клуб - ', name."
+
+  "Вікно для відображення спортсменів"
+  "  athleteListPane := PluggableListMorph on: self list: #athleteNames selection: nil.
+    window addMorph: athleteListPane frame: (0 @ 0 corner: 1 @ 0.6).
+"
+    "Додаємо меню"
+    window addMorph: (self createMenuMorph) frame: (0 @ 0 corner: 1 @ 1).
+   "TODO: please make this menu reopen after calling."
+    window openInWorld.
+
+]
+
 { #category : 'printing' }
 SportClub >> printCategoryInfo: aCategory [ 
     Transcript show: 'Список спортсменів категорії: ', aCategory; cr.
@@ -177,6 +263,39 @@ SportClub >> reviewContractsAtSpecificTime: currentTimeString [
 	].
 
 
+]
+
+{ #category : 'as yet unclassified' }
+SportClub >> showAllAthletes [ 
+    Transcript show: 'Список всіх спортсменів: '; cr.
+    members do: [ :athlete |
+        Transcript show: athlete lastName, ', ', athlete nationality; cr.
+    ].
+]
+
+{ #category : 'as yet unclassified' }
+SportClub >> showTopScorers [ 
+    | topScorers |
+    topScorers := self findTopScorers.
+    Transcript show: 'Найкращі голеадори:'; cr.
+    topScorers do: [ :player | 
+        Transcript show: player lastName, ', Голи: ', player goals asString; cr.
+    ].
+]
+
+{ #category : 'as yet unclassified' }
+SportClub >> showTopTennisPlayers [ 
+    | topTennisPlayers |
+    topTennisPlayers := self findTopRankedTennisPlayers.
+    Transcript show: 'Тенісисти з топ-10 світового рейтингу:'; cr.
+    topTennisPlayers do: [ :player | 
+        Transcript show: player lastName, ', Рейтинг: ', player worldRanking asString; cr.
+    ].
+]
+
+{ #category : 'as yet unclassified' }
+SportClub >> someTestMethod [
+    Transcript show: 'someTestMethod called'; cr.
 ]
 
 { #category : 'review contracts' }

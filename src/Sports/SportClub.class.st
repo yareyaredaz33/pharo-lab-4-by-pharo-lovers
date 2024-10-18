@@ -19,6 +19,27 @@ SportClub >> addSportsperson: anAthlete [
 
 ]
 
+{ #category : 'as yet unclassified' }
+SportClub >> athleteNames [ 
+    "Список прізвищ спортсменів для відображення в вікні"
+    ^ members collect: [ :athlete | athlete lastName ].
+
+]
+
+{ #category : 'as yet unclassified' }
+SportClub >> createMenuMorph [ 
+    | menu |
+
+    menu := MenuMorph new.
+
+    menu add: 'Додати нового спортсмена' action: [ self addAthleteFromDialog ].
+    menu add: 'Вивести інформацію про всіх спортсменів' action: [ self showAllAthletes ].
+    menu add: 'Вивести тенісистів з топ-10' action: [ self showTopTennisPlayers ].
+    menu add: 'Найкращі голеадори' action: [ self showTopScorers ].
+
+    ^ menu
+]
+
 { #category : 'display' }
 SportClub >> displayAllMembers [ 
     members do: [ :athlete | athlete displayInformationInTranscript ].
@@ -99,6 +120,24 @@ SportClub >> name: aName [
     name := aName.
 ]
 
+{ #category : 'as yet unclassified' }
+SportClub >> openMainWindow [ 
+    | window athleteListPane |
+
+    window := SystemWindow labelled: 'Спортивний клуб - ', name.
+  "  window label: 'Спортивний клуб - ', name."
+
+  "  ""Вікно для відображення спортсменів""
+    athleteListPane := PluggableListMorph on: self list: #athleteNames selection: nil.
+    window addMorph: athleteListPane frame: (0 @ 0 corner: 1 @ 0.6).
+"
+    "Додаємо меню"
+   " window addMorph: (self createMenuMorph) frame: (0 @ 0.6 corner: 1 @ 1)."
+
+    window openInWorld.
+
+]
+
 { #category : 'printing' }
 SportClub >> printCategoryInfo: aCategory [ 
     Transcript show: 'Список спортсменів категорії: ', aCategory; cr.
@@ -177,6 +216,34 @@ SportClub >> reviewContractsAtSpecificTime: currentTimeString [
 	].
 
 
+]
+
+{ #category : 'as yet unclassified' }
+SportClub >> showAllAthletes [ 
+    Transcript show: 'Список всіх спортсменів: '; cr.
+    members do: [ :athlete |
+        Transcript show: athlete lastName, ', ', athlete nationality; cr.
+    ].
+]
+
+{ #category : 'as yet unclassified' }
+SportClub >> showTopScorers [ 
+    | topScorers |
+    topScorers := self findTopScorers.
+    Transcript show: 'Найкращі голеадори:'; cr.
+    topScorers do: [ :player | 
+        Transcript show: player lastName, ', Голи: ', player goals asString; cr.
+    ].
+]
+
+{ #category : 'as yet unclassified' }
+SportClub >> showTopTennisPlayers [ 
+    | topTennisPlayers |
+    topTennisPlayers := self findTopRankedTennisPlayers.
+    Transcript show: 'Тенісисти з топ-10 світового рейтингу:'; cr.
+    topTennisPlayers do: [ :player | 
+        Transcript show: player lastName, ', Рейтинг: ', player worldRanking asString; cr.
+    ].
 ]
 
 { #category : 'review contracts' }

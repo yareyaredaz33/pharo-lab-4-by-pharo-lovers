@@ -11,11 +11,42 @@ Class {
 		'nationality'
 	],
 	#classVars : [
+		'Database',
 		'SportspersonCollection'
 	],
 	#category : 'Sports',
 	#package : 'Sports'
 }
+
+{ #category : 'as yet unclassified' }
+Sportsperson class >> allAthletes [ 
+    "Повертає всіх спортсменів в базі"
+    ^ Database values.
+
+]
+
+{ #category : 'as yet unclassified' }
+Sportsperson class >> clearDatabase [ 
+    "Очищає базу даних"
+    Database := Dictionary new.
+    Transcript show: 'База даних очищена.'; cr.
+
+]
+
+{ #category : 'as yet unclassified' }
+Sportsperson class >> displayDatabaseState [ 
+    "Виводить всіх спортсменів у базі"
+    | allAthletes |
+    allAthletes := self allAthletes.
+    (allAthletes isEmpty)
+        ifTrue: [ Transcript show: 'У базі немає спортсменів!'; cr ]
+        ifFalse: [ 
+            Transcript show: 'У базі збережено таких спортсменів:'; cr.
+            allAthletes do: [ :athlete | Transcript show: athlete displayInformation; cr ].
+        ].
+    Transcript show: 'Поточний стан бази даних: ', Database size printString, ' спортсменів.'; cr.
+
+]
 
 { #category : 'as yet unclassified' }
 Sportsperson class >> displayOtherCountryAthletes: aCollection nationality: country [
@@ -45,6 +76,13 @@ Sportsperson class >> displayUkrainianAthletes: aCollection [
             Transcript show: 'Прізвище: ', each lastName, ', Прибуток: ', each totalEarnings asString, ', Вид спорту: ', each sportType; cr.
         ].
     
+]
+
+{ #category : 'as yet unclassified' }
+Sportsperson class >> findByLastName: aLastName [ 
+    "Шукає спортсмена за прізвищем"
+    ^ Database at: aLastName ifAbsent: [ nil ].
+
 ]
 
 { #category : 'as yet unclassified' }
@@ -93,6 +131,24 @@ Sportsperson class >> loadFromTxtFileCollection [
     ].
     stream close.
     ^athletesCollection.
+]
+
+{ #category : 'actions' }
+Sportsperson class >> save: anAthlete [
+	"Зберігає спортсмена в базу даних"
+
+	(Database at: anAthlete lastName ifAbsent: [ nil ])
+		ifNil: [
+			Database at: anAthlete lastName put: anAthlete.
+			Transcript
+				show:
+					'Спортсмена з прізвищем ' , anAthlete lastName , ' збережено.';
+				cr ]
+		ifNotNil: [
+			Transcript
+				show:
+					'Спортсмен з прізвищем ' , anAthlete lastName , ' вже існує!';
+				cr ]
 ]
 
 { #category : 'arithmetic' }
@@ -180,6 +236,16 @@ Sportsperson >> displayInformationInTranscript [
 { #category : 'comparing' }
 Sportsperson >> earningsLessThan: anotherSportsperson [
     ^ self totalEarnings < anotherSportsperson totalEarnings.
+]
+
+{ #category : 'initialization' }
+Sportsperson >> initialize [ 
+    "Ініціалізуємо базу даних"
+    Database := Dictionary new.
+    Transcript show: 'База даних ініціалізована.'; cr.
+
+
+
 ]
 
 { #category : 'initialization' }

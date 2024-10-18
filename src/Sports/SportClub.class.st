@@ -42,7 +42,7 @@ SportClub >> addSportspersonFromDialog [
     sportsperson := sportType = 'FootballPlayer'
         ifTrue: [ FootballPlayer new initializeWithLastName: lastName age: age nationality: nationality club: '' contract: 0 goals: 0 ]
         ifFalse: [ TennisPlayer new initializeWithLastName: lastName age: age nationality: nationality worldRanking: 0 earnings: #() ].
-
+"TODO: add transcript output that sportsman is added. preferably add the person itself."
     "Додаємо спортсмена до колекції"
     self addSportsperson: sportsperson.
 
@@ -81,7 +81,7 @@ SportClub >> createMenuMorph [
     menuMorph add: 'Переглянути гравця з найвищою зарплатою'
         target: self
         selector: #highestPaidAthlete.
-   
+   "TODO: maybe rework the appearance of menu, look into other methods."
     "Return the menu morph to be added to the window or other morph"
     ^ menuMorph.
 
@@ -180,7 +180,7 @@ SportClub >> openMainWindow [
 "
     "Додаємо меню"
     window addMorph: (self createMenuMorph) frame: (0 @ 0 corner: 1 @ 1).
-
+   "TODO: please make this menu reopen after calling."
     window openInWorld.
 
 ]

@@ -179,6 +179,25 @@ SportClub >> reviewContractsAtSpecificTime: currentTimeString [
 
 ]
 
+{ #category : 'as yet unclassified' }
+SportClub >> saveClubToFile [ 
+"    | file stream |
+    file := 'sportClub.txt' asFileReference.
+    stream := file writeStream.
+    members isEmpty
+        ifFalse: [
+            stream nextPutAll: 'Члени клубу: '; cr.
+            members do: [ :athlete |
+                stream nextPutAll: athlete displayInformation; cr.
+            ].
+        ]
+        ifTrue: [
+            stream nextPutAll: 'Немає членів клубу'; cr.
+        ].
+    stream close.
+    Transcript show: 'Інформація про клуб збережена у файл'; cr."
+]
+
 { #category : 'review contracts' }
 SportClub >> startContractReviewAtSpecificTime: specificTime [
 	[

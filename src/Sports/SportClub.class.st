@@ -12,9 +12,39 @@ Class {
 	#package : 'Sports'
 }
 
+{ #category : 'as yet unclassified' }
+SportClub class >> someTestMethod [
+    Transcript show: 'someTestMethod called'; cr.
+]
+
 { #category : 'adding' }
 SportClub >> addSportsperson: anAthlete [ 
     members add: anAthlete.
+
+
+]
+
+{ #category : 'adding' }
+SportClub >> addSportspersonFromDialog [ 
+    | lastName age nationality sportType sportsperson |
+    
+    lastName := UIManager default request: 'Введіть прізвище спортсмена:'.
+     [ 
+        age := UIManager default request: 'Введіть вік спортсмена:'. 
+        (age isAllDigits) 
+    ] whileFalse: [ 
+        UIManager default inform: 'Вік має бути числом! Будь ласка, спробуйте знову.'. 
+    ].
+    nationality := UIManager default request: 'Введіть національність спортсмена:'.
+    sportType := UIManager default request: 'Введіть тип спортсмена (FootballPlayer або TennisPlayer):'.
+
+    "Створюємо спортсмена на основі вибраного типу"
+    sportsperson := sportType = 'FootballPlayer'
+        ifTrue: [ FootballPlayer new initializeWithLastName: lastName age: age nationality: nationality club: '' contract: 0 goals: 0 ]
+        ifFalse: [ TennisPlayer new initializeWithLastName: lastName age: age nationality: nationality worldRanking: 0 earnings: #() ].
+
+    "Додаємо спортсмена до колекції"
+    self addSportsperson: sportsperson.
 
 
 ]
@@ -27,17 +57,28 @@ SportClub >> athleteNames [
 ]
 
 { #category : 'as yet unclassified' }
-SportClub >> createMenuMorph [ 
-    | menu |
+SportClub >> createMenuMorph [
+    | menuMorph |
+    
+    "Create a new MorphMenu"
+    menuMorph := MenuMorph new.
 
-    menu := MenuMorph new.
+    "Add menu items with actions"
+    menuMorph add: 'Додати спортсмена'
+        target: self
+        selector: #addSportspersonFromDialog.
 
-    menu add: 'Додати нового спортсмена' action: [ self addAthleteFromDialog ].
-    menu add: 'Вивести інформацію про всіх спортсменів' action: [ self showAllAthletes ].
-    menu add: 'Вивести тенісистів з топ-10' action: [ self showTopTennisPlayers ].
-    menu add: 'Найкращі голеадори' action: [ self showTopScorers ].
+    menuMorph add: 'Вивести інформацію про спортсменів'
+        target: self
+        selector: #printAllAthletesInfo.
 
-    ^ menu
+    menuMorph add: 'Переглянути контракти спортсменів'
+        target: self
+        selector: #reviewContracts.
+
+    "Return the menu morph to be added to the window or other morph"
+    ^ menuMorph.
+
 ]
 
 { #category : 'display' }
@@ -127,12 +168,12 @@ SportClub >> openMainWindow [
     window := SystemWindow labelled: 'Спортивний клуб - ', name.
   "  window label: 'Спортивний клуб - ', name."
 
-  "  ""Вікно для відображення спортсменів""
-    athleteListPane := PluggableListMorph on: self list: #athleteNames selection: nil.
+  "Вікно для відображення спортсменів"
+  "  athleteListPane := PluggableListMorph on: self list: #athleteNames selection: nil.
     window addMorph: athleteListPane frame: (0 @ 0 corner: 1 @ 0.6).
 "
     "Додаємо меню"
-   " window addMorph: (self createMenuMorph) frame: (0 @ 0.6 corner: 1 @ 1)."
+    window addMorph: (self createMenuMorph) frame: (0 @ 0.6 corner: 1 @ 1).
 
     window openInWorld.
 
@@ -244,6 +285,11 @@ SportClub >> showTopTennisPlayers [
     topTennisPlayers do: [ :player | 
         Transcript show: player lastName, ', Рейтинг: ', player worldRanking asString; cr.
     ].
+]
+
+{ #category : 'as yet unclassified' }
+SportClub >> someTestMethod [
+    Transcript show: 'someTestMethod called'; cr.
 ]
 
 { #category : 'review contracts' }

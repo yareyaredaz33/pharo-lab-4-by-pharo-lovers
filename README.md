@@ -9,7 +9,7 @@
 **Team Members**:  
 - Dariia Antoniyk - @drynaa7
 - Bacho Mariya-Tereza - @teresabacho
-- Halyna Haplyk - 
+- Halyna Haplyk - @halya-h
 - Anna Pavlyk - @yareyaredaz33
 
 ## Project Description (English)

@@ -7,10 +7,10 @@
 
 **Language**: Pharo Smalltalk  
 **Team Members**:  
-- Dariia Antoniyk  
-- Bacho Mariya-Tereza  
-- Halyna Haplyk  
-- Anna Pavlyk  
+- Dariia Antoniyk - @drynaa7
+- Bacho Mariya-Tereza - @teresabacho
+- Halyna Haplyk - 
+- Anna Pavlyk - @yareyaredaz33
 
 ## Project Description (English)
 

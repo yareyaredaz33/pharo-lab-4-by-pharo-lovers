@@ -134,6 +134,35 @@ SportClub >> initializeWithName: clubName [
 
 ]
 
+{ #category : 'as yet unclassified' }
+SportClub >> loadClubFromFile [ 
+      | file stream lastNameval ageval nationalityval athlete line |
+    file := 'sportClub.txt' asFileReference.
+    stream := file readStream.
+    stream nextLine.
+
+    [stream atEnd] whileFalse: [
+        line := stream nextLine.
+        line isEmpty ifTrue: [ ^self. ].
+        lastNameval := (line findTokens: ':') size > 1 ifTrue: [
+            (line findTokens: ':') second
+        ] ifFalse: [ ^self. ].
+        line := stream nextLine.
+        ageval := (line findTokens: ':') size > 1 ifTrue: [
+            (line findTokens: ':') second asInteger
+        ] ifFalse: [ ^self. ].
+        line := stream nextLine.
+        nationalityval := (line findTokens: ':') size > 1 ifTrue: [
+            (line findTokens: ':') second
+        ] ifFalse: [ ^self. ].
+        athlete := Sportsperson new initializeWithLastName: lastNameval age: ageval nationality: nationalityval.
+        self addSportsperson: athlete.
+    ].
+
+    stream close.
+    Transcript show: 'Завантажено дані з файлу'; cr.
+]
+
 { #category : 'review contracts' }
 SportClub >> manualReviewContracts [
     ^ String streamContents: [ :stream |
@@ -263,6 +292,25 @@ SportClub >> reviewContractsAtSpecificTime: currentTimeString [
 	].
 
 
+]
+
+{ #category : 'as yet unclassified' }
+SportClub >> saveClubToFile [ 
+   | file stream |
+    file := 'sportClub.txt' asFileReference.
+    stream := file writeStream.
+    members isEmpty
+        ifFalse: [
+"            stream nextPutAll: 'Члени клубу: '; cr."
+            members do: [ :athlete |
+                stream nextPutAll: athlete displayInformation.
+            ].
+        ]
+        ifTrue: [
+            stream nextPutAll: 'Немає членів клубу'; cr.
+        ].
+    stream close.
+    Transcript show: 'Інформація про клуб збережена у файл'; cr.
 ]
 
 { #category : 'as yet unclassified' }

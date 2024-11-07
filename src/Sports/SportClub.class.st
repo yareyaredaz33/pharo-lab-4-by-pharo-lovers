@@ -11,7 +11,7 @@ Class {
 	#category : 'Sports',
 	#package : 'Sports'
 }
-=======
+
 { #category : 'as yet unclassified' }
 SportClub class >> someTestMethod [
     Transcript show: 'someTestMethod called'; cr.

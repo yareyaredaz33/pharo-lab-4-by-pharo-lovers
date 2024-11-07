@@ -257,6 +257,7 @@ SportClub >> reviewContractsAtSpecificTime: currentTimeString [
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 { #category : 'as yet unclassified' }
 SportClub >> saveClubToFile [ 
   | fileName file stream |
@@ -283,6 +284,8 @@ SportClub >> saveClubToFile [
    Transcript show: 'Інформація про клуб збережена у файл: ', fileName; cr.
 ]
 
+=======
+>>>>>>> parent of 3fe81a9 (Merge pull request #7 Add the general Interface:)
 =======
 >>>>>>> parent of 3fe81a9 (Merge pull request #7 Add the general Interface:)
 =======

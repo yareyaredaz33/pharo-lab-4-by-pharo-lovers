@@ -48,7 +48,7 @@ SportClub >> addSportspersonFromDialog [
     "Додаємо спортсмена до колекції"
     self addSportsperson: sportsperson.
 
-
+self createMenuMorph.
 ]
 
 { #category : 'as yet unclassified' }
@@ -72,12 +72,11 @@ SportClub >> createMenuMorph [
 
     menuMorph add: 'Вивести інформацію про спортсменів'
         target: self
-        selector: #printAllAthletesInfo.
+        selector: #displayAllMembers.
 
     menuMorph add: 'Переглянути контракти спортсменів'
         target: self
         selector: #reviewContracts.
-<<<<<<< HEAD
     menuMorph add: 'Переглянути інформацію про клуб'
         target: self
         selector: #displayClubInfo.
@@ -85,9 +84,6 @@ SportClub >> createMenuMorph [
         target: self
         selector: #highestPaidAthlete.
    "TODO: maybe rework the appearance of menu, look into other methods."
-=======
-
->>>>>>> parent of 021a560 (Updated menu: every method now works properly, added some other methods to display. )
     "Return the menu morph to be added to the window or other morph"
     ^ menuMorph.
 
@@ -261,13 +257,8 @@ SportClub >> openMainWindow [
     window addMorph: athleteListPane frame: (0 @ 0 corner: 1 @ 0.6).
 "
     "Додаємо меню"
-<<<<<<< HEAD
     window addMorph: (self createMenuMorph) frame: (0 @ 0 corner: 1 @ 1).
    "TODO: please make this menu reopen after calling."
-=======
-    window addMorph: (self createMenuMorph) frame: (0 @ 0.6 corner: 1 @ 1).
-
->>>>>>> parent of 021a560 (Updated menu: every method now works properly, added some other methods to display. )
     window openInWorld.
 
 ]
